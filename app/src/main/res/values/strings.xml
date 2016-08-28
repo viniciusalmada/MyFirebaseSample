@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyFirebaseSample</string>
+    <string name="loading">Carregando…</string>
+    <string name="facebook_app_id" translatable="false">1814800498743643</string>
+</resources>
