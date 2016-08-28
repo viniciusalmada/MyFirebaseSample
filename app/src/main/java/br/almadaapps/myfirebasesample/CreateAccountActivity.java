@@ -15,6 +15,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import br.almadaapps.myfirebasesample.domain.User;
+
 /**
  * Created by vinicius on 28/08/16.
  */
@@ -23,7 +25,6 @@ public class CreateAccountActivity extends CommonActivity {
     public static final String TAG = "CreateAccountActivity: ";
 
     private EditText etNome;
-    private EditText etIgreja;
     private EditText etCargo;
     private EditText etEmail;
     private EditText etPassword;
@@ -31,6 +32,8 @@ public class CreateAccountActivity extends CommonActivity {
     private FirebaseAuth mFirebaseAuth;
 
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +74,6 @@ public class CreateAccountActivity extends CommonActivity {
     @Override
     protected void initViews() {
         etNome = (EditText) findViewById(R.id.et_name);
-        etIgreja = (EditText) findViewById(R.id.et_igreja);
         etCargo = (EditText) findViewById(R.id.et_funcao);
         etEmail = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_password);
@@ -95,6 +97,9 @@ public class CreateAccountActivity extends CommonActivity {
                             Toast.makeText(CreateAccountActivity.this, "Falha na operação", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(CreateAccountActivity.this, "Conta criada com sucesso", Toast.LENGTH_SHORT).show();
+                            saveUserData();
+                            FirebaseUser fu = mFirebaseAuth.getCurrentUser();
+                            if (fu != null) user.save(fu.getUid());
                             Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
@@ -103,5 +108,12 @@ public class CreateAccountActivity extends CommonActivity {
                         hideProgressDialog();
                     }
                 });
+    }
+
+    private void saveUserData() {
+        user = new User();
+        user.setNome(etNome.getText().toString());
+        user.setCargo(etCargo.getText().toString());
+        user.setEmail(etEmail.getText().toString());
     }
 }
