@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,9 +30,8 @@ public class MainActivity extends CommonActivity {
 
     private FirebaseUser mUser;
 
-    private DatabaseReference mDatabaseReference;
-
-    private ValueEventListener mValueEventListener;
+    private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference mUsersRef = mRootRef.child(User.DB_NODE_USERS);
 
 //    private CustomValueEventListener mValueEventListener;
 
@@ -42,6 +39,7 @@ public class MainActivity extends CommonActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -51,36 +49,13 @@ public class MainActivity extends CommonActivity {
             }
         };
 
-//        mValueEventListener = new CustomValueEventListener();
-        mValueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User u = dataSnapshot.getValue(User.class);
-
-                Toast.makeText(MainActivity.this, u.getNome(), Toast.LENGTH_SHORT).show();
-
-                Log.i(TAG, "Nome: " + u.getNome());
-                Log.i(TAG, "Email: " + u.getEmail());
-                Log.i(TAG, "Cargo: " + u.getCargo());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 //        String data;
-        if (mUser != null) {
-            mDatabaseReference = FirebaseDatabase.getInstance().getReference();
-            mDatabaseReference.addValueEventListener(mValueEventListener);
-        } else {
-            Toast.makeText(this, "User não logado", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
     @Override
@@ -92,6 +67,24 @@ public class MainActivity extends CommonActivity {
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthStateListener);
+        mUsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    User u = dataSnapshot.child(mUser.getUid()).getValue(User.class);
+                    String s = u.getNome() + "\n" + u.getEmail() + "\n" + u.getCargo();
+                    text.setText(s);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -99,8 +92,8 @@ public class MainActivity extends CommonActivity {
         super.onStop();
         if (mAuth != null)
             mAuth.removeAuthStateListener(mAuthStateListener);
-        if (mDatabaseReference != null)
-            mDatabaseReference.removeEventListener(mValueEventListener);
+//        if (mDatabaseReference != null)
+//            mDatabaseReference.removeEventListener(mValueEventListener);
 
     }
 

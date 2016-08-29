@@ -26,6 +26,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.google.firebase:firebase-core:9.4.0'
+    compile 'com.google.firebase:firebase-storage:9.4.0'
     compile 'com.google.firebase:firebase-auth:9.4.0'
     compile 'com.google.firebase:firebase-database:9.4.0'
     // Facebook Android SDK (only required for Facebook Login)

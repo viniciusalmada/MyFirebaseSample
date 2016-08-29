@@ -31,8 +31,6 @@ public class CreateAccountActivity extends CommonActivity {
 
     private FirebaseAuth mFirebaseAuth;
 
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
-
     private User user;
 
     @Override
@@ -42,23 +40,9 @@ public class CreateAccountActivity extends CommonActivity {
         initViews();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         super.onStart();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
@@ -69,7 +53,7 @@ public class CreateAccountActivity extends CommonActivity {
         super.onStop();
         if (mFirebaseAuth != null)
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-    }
+    }*/
 
     @Override
     protected void initViews() {
