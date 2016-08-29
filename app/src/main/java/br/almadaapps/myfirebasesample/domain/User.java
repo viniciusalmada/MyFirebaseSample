@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class User {
+    public static final String DB_NODE_USERS = "users";
     private String nome;
     private String cargo;
     private String email;
@@ -41,6 +42,6 @@ public class User {
 
     public void save(String uid) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.child("users").child(uid).setValue(this);
+        myRef.child(DB_NODE_USERS).child(uid).setValue(this);
     }
 }
