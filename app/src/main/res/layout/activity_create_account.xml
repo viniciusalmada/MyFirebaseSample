@@ -13,13 +13,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageButton
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iv_user_image"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:onClick="setImageProfile"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_person"/>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/iv_user_image"
                 android:hint="Nome">
 
                 <EditText
