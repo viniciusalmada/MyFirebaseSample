@@ -10,6 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
     buildTypes {
         release {
@@ -26,12 +29,14 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.google.firebase:firebase-core:9.4.0'
+    compile 'com.google.firebase:firebase-storage:9.4.0'
     compile 'com.google.firebase:firebase-auth:9.4.0'
     compile 'com.google.firebase:firebase-database:9.4.0'
     // Facebook Android SDK (only required for Facebook Login)
     // This is only compiled into the 'facebook' variant of this app. You can build
     // a 'nofacebook' variant to test on devices with SDK < 15.
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.3.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:24.2.0'
 }

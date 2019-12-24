@@ -12,6 +12,7 @@ public class User {
     private String nome;
     private String cargo;
     private String email;
+//    private String urlDownloadImage;
 
     public User() {
     }
@@ -39,6 +40,14 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+//    public String getUrlDownloadImage() {
+//        return urlDownloadImage;
+//    }
+//
+//    public void setUrlDownloadImage(String urlDownloadImage) {
+//        this.urlDownloadImage = urlDownloadImage;
+//    }
 
     public void save(String uid) {
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
